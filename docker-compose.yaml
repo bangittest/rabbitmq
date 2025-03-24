@@ -1,0 +1,13 @@
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management  # Sử dụng image RabbitMQ 3.x với plugin quản lý
+    container_name: rabbitmq     # Tên container là "rabbitmq"
+    ports:
+      - "5672:5672"              # Cổng cho RabbitMQ server
+      - "15672:15672"            # Cổng cho RabbitMQ management console
+    networks:
+      - default                  # Kết nối vào mạng mặc định của Docker (mạng này sẽ tự động tạo nếu chưa có)
+
+networks:
+  default: {}                   # Tạo mạng mặc định cho các dịch vụ
