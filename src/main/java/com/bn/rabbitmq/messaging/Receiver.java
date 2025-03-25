@@ -1,6 +1,7 @@
 package com.bn.rabbitmq.messaging;
 
 import com.bn.rabbitmq.common.CommonConverter;
+import com.bn.rabbitmq.dto.TrainLocationMessage;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -17,18 +18,18 @@ public class Receiver {
         this.userService = userService;
     }
 
-    @RabbitListener(queues = "companyRatingQueue")
-    public void receiveMessage(String message) {
-        try {
-//            List<User> users = CommonConverter.convertFromJson(message,new TypeReference<List<User>>(){});
-//            userService.updateUser(users);
-            User user = CommonConverter.convertFromJson(message, new TypeReference<User>() {});
-            userService.createUser(user);
-            System.out.println("Received User: " );
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    @RabbitListener(queues = "companyRatingQueue")
+//    public void receiveMessage(String message) {
+//        try {
+////            List<User> users = CommonConverter.convertFromJson(message,new TypeReference<List<User>>(){});
+////            userService.updateUser(users);
+//            TrainLocationMessage trainLocationMessage = CommonConverter.convertFromJson(message, new TypeReference<TrainLocationMessage>() {});
+////            userService.createUser(user);
+//            System.out.println("Received TrainLocationMessage: " + trainLocationMessage);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @RabbitListener(queues = "anotherQueue")
     public void receiveMessage2(String message) {

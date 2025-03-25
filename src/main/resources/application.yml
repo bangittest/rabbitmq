@@ -1,0 +1,18 @@
+server:
+  shutdown: graceful
+  port: 8080
+
+spring:
+  redis:
+    host: 3.26.131.216
+    port: 6379
+    password: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    timeout: 60000
+    sentinel:
+      enabled: false
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 5
+        min-idle: 2
+        max-wait: 5000ms
