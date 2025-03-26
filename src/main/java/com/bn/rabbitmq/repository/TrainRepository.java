@@ -12,5 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TrainRepository extends JpaRepository<Train, Long> {
 
+    Train getAllByCode(String code);
+
 
 }
