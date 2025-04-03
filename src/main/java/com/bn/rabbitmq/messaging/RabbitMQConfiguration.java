@@ -1,9 +1,6 @@
 package com.bn.rabbitmq.messaging;
 
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -56,5 +53,64 @@ public class RabbitMQConfiguration {
                 new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
+    }
+
+    // Tạo một Fanout Exchange (nếu chưa tồn tại)
+    @Bean
+    public FanoutExchange fanoutExchange1() {
+        // Exchange sẽ không được tạo lại nếu đã tồn tại
+        return new FanoutExchange("fanoutExchange1", true, false); // true -> durable, false -> không auto-delete
+    }
+
+    // Tạo Fanout Exchange thứ hai
+    @Bean
+    public FanoutExchange fanoutExchange2() {
+        return new FanoutExchange("fanoutExchange2",true,false);
+    }
+
+    @Bean
+    public Queue queue1() {
+        // Queue 1 sẽ không được tạo lại nếu đã tồn tại
+        return new Queue("queue1", true); // durable
+    }
+
+    @Bean
+    public Queue queue2() {
+        // Queue 2 sẽ không được tạo lại nếu đã tồn tại
+        return new Queue("queue2", true); // durable
+    }
+
+    @Bean
+    public Queue queue3() {
+        // Queue 1 sẽ không được tạo lại nếu đã tồn tại
+        return new Queue("queue3", true); // durable
+    }
+
+    @Bean
+    public Queue queue4() {
+        // Queue 2 sẽ không được tạo lại nếu đã tồn tại
+        return new Queue("queue4", true); // durable
+    }
+
+    // Bind các queue vào fanoutExchange1
+    @Bean
+    public Binding binding1(FanoutExchange fanoutExchange1, Queue queue1) {
+        return BindingBuilder.bind(queue1).to(fanoutExchange1);
+    }
+
+    @Bean
+    public Binding binding2(FanoutExchange fanoutExchange1, Queue queue2) {
+        return BindingBuilder.bind(queue2).to(fanoutExchange1);
+    }
+
+    // Bind các queue vào fanoutExchange2
+    @Bean
+    public Binding binding3(FanoutExchange fanoutExchange2, Queue queue3) {
+        return BindingBuilder.bind(queue3).to(fanoutExchange2);
+    }
+
+    @Bean
+    public Binding binding4(FanoutExchange fanoutExchange2, Queue queue4) {
+        return BindingBuilder.bind(queue4).to(fanoutExchange2);
     }
 }
